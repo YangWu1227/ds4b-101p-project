@@ -10,9 +10,12 @@
 # %% Start Cell
 
 # Core Python Data Analysis
+import os
+from textwrap import fill
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from pandas.core import groupby
 
 # Plotting
 # Only import functions we need
@@ -25,6 +28,9 @@ from plotnine import (
     facet_wrap,
     scale_y_continuous,
     scale_x_datetime,
+    element_rect,
+    element_blank,
+    element_text,
     labs,
     theme,
     theme_minimal,
@@ -36,11 +42,16 @@ from plotnine import (
 # Miscellaneous
 from mizani.breaks import date_breaks
 from mizani.formatters import date_format, currency_format
+from plotnine.themes.elements import element_blank, element_rect
+from plotnine.themes.themeable import panel_background
 
 # Only import the "pretty" module from the "rich" library
 from rich import pretty
+from rich.console import group
 # The function installs automatic pretty printing in the Python read–eval–print loop
 pretty.install()
+
+# Import OS library to interact with operating system
 
 # %% End cell
 
@@ -219,7 +230,7 @@ print(getattr(df, "total_revenue"))
 # Subset by character index (a list)
 # Use [[ operator for multiple subsetting
 # This creates a copy
-# A new binding is created from the name df to the copied object
+# A new binding is created from the name "df" to the copied object with reordered columns
 df = df[[
     'order.id',
     'order.line',
@@ -250,49 +261,232 @@ df.columns = df.columns.str.replace(
     repl="_",
 )
 
-# Create a new binding from new name to same object
+# Create a new binding from new name to the same object
 bikes_orderlines_wrangled = df
+
+# %% End Cell
+
+# Store data as file so we do not need to run the above cells each time
+
+# %% Start Cell
+
+# Check current working directory
+os.getcwd()
+# Create a new sub-directory in this working directory using a relative path
+# os.mkdir(path="00_data_wrangled")
+# Serialize pandas data frame to folder using pickle
+# Python serialization is the act of converting a Python object into a byte stream
+# bikes_orderlines_wrangled.to_pickle(path="00_data_wrangled/bikes_wrangled.pk1")
 
 # %% End Cell
 
 
 # 6.0 Visualizing a Time Series ----
 
+# %% Start Cell
+
+# Unpickle byte stream to get python object back
+df = pd.read_pickle(
+    "00_data_wrangled/bikes_wrangled.pk1"
+)
+df = pd.DataFrame(df)
 
 # 6.1 Total Sales by Month ----
 
+# Examine datetime object (datetime64[ns])
+print(df["order_date"])
+# Extract year, month, day
+print(df["order_date"].dt.year)
+print(df["order_date"].dt.month)
+print(df["order_date"].dt.day)
+
+# Subset
+sales_by_month = (df[["order_date", "total_revenue"]]
+                  # Set date column as index (row labels)
+                  # Similar to xts objects in R
+                  # The argument "inplace" indicates whether to modify in place
+                  .set_index(
+    keys="order_date",
+    inplace=False
+)
+    # Frequency conversion and resampling of time series
+    # The rule argument is the offset alias
+    # Data will be grouped by the frequency "rule"
+    # We convert from daily to monthly frequency
+    # "MS" is the alias for month start frequency
+    .resample(
+        rule="MS"
+)
+    # Sum total revenue by month
+    .aggregate(
+        func=np.sum
+)
+    .reset_index()
+)
+# Examine last 10 rows
+sales_by_month.tail(n=5)
+# Number of monthly observations (n = 60)
+len(sales_by_month)
 
 # Quick Plot ----
 
+sales_by_month.plot(
+    x="order_date",
+    y="total_revenue"
+)
 
 # Report Plot ----
+
+# Use a function factory that creates a function that formats numeric values
+usd_fn = currency_format(prefix="$", digits=0, big_mark=",")
+# See it in action
+usd_fn([100000])
+
+# Note some arguments use "." in R but "_" in Python
+(ggplot(data=sales_by_month,
+        mapping=aes(x="order_date", y="total_revenue")) +
+ geom_line(color="black") +
+ geom_smooth(
+    method="loess",
+    color="orange",
+    se=False,
+    # This argument controls the amount of smoothing
+    # Smaller numbers produce wigglier lines, larger numbers produce smoother lines.
+    span=0.4
+) +
+    labs(
+    x="",
+    y="Revenues (USD)",
+    title="Total Monthy Revenues"
+) +
+    scale_y_continuous(
+    labels=usd_fn
+) +
+    # Ensure that the y-axis begins with 0
+    expand_limits(
+    y=0
+) +
+    theme(
+    panel_background=element_rect(fill="white"),
+    panel_grid=element_blank()
+))
 
 
 # 6.2 Sales by Year and Category 2 ----
 
 # ** Step 1 - Manipulate ----
+# Subset
+sales_by_week = (df[["order_date", "total_revenue", "category_2"]]
+                 .set_index(
+    keys="order_date"
+)
+    # This returns a DataFrameGroupBy object
+    # THe split-apply-combine approach
+    .groupby(
+    by="category_2"
+)
+    # This returns DatetimeIndexResamplerGroupby object
+    .resample(
+        rule="W"
+)
+    # Sum total revenue by Week
+    # Pass a dictionary of dictionaries to .agg
+    # Apply np.sum to the "total_revenue" column
+    .aggregate(
+        func={"total_revenue": np.sum}
+)
+    # Remove multiindex
+    # Remve this last line to see what multiindex means
+    .reset_index()
+)
 
+sales_by_week = pd.DataFrame(sales_by_week)
 
 # Step 2 - Visualize ----
 
+sales_by_week
+
+# Convert data from long to wide
+sales_by_week_wide = (sales_by_week
+                      .pivot(
+                          index="order_date",
+                          columns="category_2",
+                          values="total_revenue"
+                      )
+                      # Fill NaN as 0
+                      .fillna(
+                          value=0,
+                          inplace=False
+                      )
+                      )
 
 # Simple Plot
+# This defaults to using row indices as x and columns as y
+sales_by_week_wide.plot(
+    kind="line",
+    subplots=True,
+    layout=(5, 2)
+)
 
 
 # Reporting Plot
+(ggplot(data=sales_by_week,
+        mapping=aes(
+            x="order_date",
+            y="total_revenue"
+        )) +
+ geom_smooth(
+    mapping=aes(color="category_2"),
+    method="loess",
+    se=False,
+    span=0.2
+) +
+    facet_wrap(
+    facets="category_2",
+    # Ensure each category has its own y-axis
+    scales="free_y"
+) +
+    scale_y_continuous(
+    labels=usd_fn
+) +
+    scale_x_datetime(
+    breaks=date_breaks("2 years"),
+    labels=date_format(fmt="%Y %m")
+) +
+    labs(
+    x="",
+    y="Total Revenue",
+    title="Total Revenue by Weeky",
+    # Change legend title
+    color="Category"
+) +
+    theme(
+    subplots_adjust={"wspace": 0.5},
+    # Change y axis text size
+    axis_text_y=element_text(size=6),
+    # Change x axis text size
+    axis_text_x=element_text(size=6),
+    panel_background=element_rect(fill="white"),
+    panel_grid=element_blank()
+)
+)
 
 
 # 7.0 Writing Files ----
 
-
-# Pickle ----
-
-
 # CSV ----
-
+df.to_csv("00_data_wrangled/bikes_wrangled.csv",
+          # Do not include primary key
+          # Or use index_lable to specify column name
+          index=False)
 
 # Excel ----
+df.to_excel("00_data_wrangled/bikes_wrangled.xlsx",
+            # Do not include primary key
+            # Or use index_lable to specify column name
+            index=False)
 
+# %% End cell
 
 # WHERE WE'RE GOING
 # - Building a forecast system
