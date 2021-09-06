@@ -142,7 +142,7 @@ bikes_orderlines_df = (orderlines_df
                            right=bikes_df, how="left",
                            left_on="product.id", right_on="bike.id"
                        )
-                       # Left join bikeship data on two the resultant data
+                       # Left join bikeship data on to the resultant data
                        .merge(
                            right=bikeshops_df, how="left",
                            left_on="customer.id", right_on="bikeshop.id"))
