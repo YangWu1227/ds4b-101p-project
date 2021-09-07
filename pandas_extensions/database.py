@@ -116,6 +116,9 @@ def collect_data(
     joined_df.columns = joined_df.columns.str.replace(
         pat=".",
         repl="_",
+        # False, treats the pattern "." as a literal string and not "find all"
+        # True, assumes the passed-in pattern is a regular expression
+        regex=False
     )
 
     # 4 Return data frame
