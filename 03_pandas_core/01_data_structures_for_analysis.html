@@ -13983,6 +13983,7 @@ a.anchor-link {
 <li><a href="#built-in-sequences">Built-in Sequences</a><ul>
 <li><a href="#list">List</a></li>
 <li><a href="#dictionary">Dictionary</a></li>
+<li><a href="#tuples">Tuples</a></li>
 </ul>
 </li>
 </ul>
@@ -14123,10 +14124,6 @@ a.anchor-link {
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>(15644, 13)
-Index([&#39;order_id&#39;, &#39;order_line&#39;, &#39;order_date&#39;, &#39;quantity&#39;, &#39;price&#39;,
-       &#39;total_revenue&#39;, &#39;model&#39;, &#39;category_1&#39;, &#39;category_2&#39;, &#39;frame_material&#39;,
-       &#39;bikeshop_name&#39;, &#39;city&#39;, &#39;state&#39;],
-      dtype=&#39;object&#39;)
 </pre>
 </div>
 </div>
@@ -14135,7 +14132,7 @@ Index([&#39;order_id&#39;, &#39;order_line&#39;, &#39;order_date&#39;, &#39;quan
 
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
@@ -14147,6 +14144,30 @@ Index([&#39;order_id&#39;, &#39;order_line&#39;, &#39;order_date&#39;, &#39;quan
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Index([&#39;order_id&#39;, &#39;order_line&#39;, &#39;order_date&#39;, &#39;quantity&#39;, &#39;price&#39;,
+       &#39;total_revenue&#39;, &#39;model&#39;, &#39;category_1&#39;, &#39;category_2&#39;, &#39;frame_material&#39;,
+       &#39;bikeshop_name&#39;, &#39;city&#39;, &#39;state&#39;],
+      dtype=&#39;object&#39;)
+</pre>
+</div>
+</div>
+
+</div>
+
 </div>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14501,7 +14522,28 @@ datetime64[ns]
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="List-">List <a class="anchor" id="list" /><a class="anchor-link" href="#List-">&#182;</a></h3>
+<h3 id="List-">List <a class="anchor" id="list" /><a class="anchor-link" href="#List-">&#182;</a></h3><p>Lists are Python’s most flexible ordered collection object type. Unlike strings, lists can contain any sort of object: numbers, strings, and even other lists. Also, unlike strings, lists may be <em>changed in place</em> by assignment to offsets and slices, list method calls, deletion statements, and more—they are <strong>mutable</strong> objects. Some properties are:</p>
+<p><strong>Ordered collections of arbitrary objects</strong></p>
+<ul>
+<li>From a functional view, lists are just places to collect other objects so you can treat them as groups. Lists also maintain a left-to-right positional ordering among the items they contain (i.e., they are sequences)</li>
+</ul>
+<p><strong>Accessed by offset</strong></p>
+<ul>
+<li>Just as with strings, you can fetch a component object out of a list by indexing the list on the object’s offset. Because items in lists are ordered by their positions, you can also do tasks such as slicing and concatenation.</li>
+</ul>
+<p><strong>Variable-length, heterogeneous, and arbitrarily nestable</strong></p>
+<ul>
+<li>Unlike strings, lists can grow and shrink in place (their lengths can vary), and they can contain any sort of object, not just one-character strings (they’re heterogeneous). Because lists can contain other complex objects, they also support arbitrary nesting; you can create lists of lists of lists, and so on.</li>
+</ul>
+<p><strong>Of the category “mutable sequence”</strong></p>
+<ul>
+<li>In terms of our type category qualifiers, lists are mutable (i.e., can be changed in place) and can respond to all the sequence operations used with strings, such as indexing, slicing, and concatenation. In fact, sequence operations work the same on lists as they do on strings; the only difference is that sequence operations such as concatenation and slicing return new lists instead of new strings when applied to lists. Because lists are mutable, however, they also support other operations that strings don’t, such as deletion and index assignment operations, which change the lists in place.</li>
+</ul>
+<p><strong>Arrays of object references</strong></p>
+<ul>
+<li>Technically, Python lists contain zero or more references to other objects. Lists might thought of as arrays of pointers (addresses). </li>
+</ul>
+
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
@@ -14509,8 +14551,7 @@ datetime64[ns]
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># List operations</span>
-<span class="c1"># Empty list</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Empty list</span>
 <span class="n">L</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
@@ -14533,31 +14574,15 @@ datetime64[ns]
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[]
-[123, &#39;abc&#39;, 1.23, {}]
-[&#39;Bob&#39;, 40.0, [&#39;dev&#39;, &#39;mgr&#39;]]
 </pre>
 </div>
 </div>
 
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>[-4, -3, -2, -1, 0, 1, 2, 3]</pre>
 </div>
 
 </div>
 
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
@@ -14571,6 +14596,27 @@ datetime64[ns]
      </div>
 </div>
 </div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[123, &#39;abc&#39;, 1.23, {}]
+</pre>
+</div>
+</div>
+
+</div>
+
 </div>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14693,7 +14739,7 @@ datetime64[ns]
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Index of index</span>
-<span class="c1"># The third elent is a sublist and we extract the fist element from this sublist</span>
+<span class="c1"># The third element is a sublist and we extract the fist element from this sublist</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 <span class="c1"># This should be a string</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
@@ -14733,6 +14779,7 @@ datetime64[ns]
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Slice to subset multiple elements</span>
+<span class="c1"># Notice that the last integer indexed element is not extracted, so slice is not inclusive</span>
 <span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
 </pre></div>
 
@@ -14884,7 +14931,7 @@ datetime64[ns]
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Membership (are these elements in the list)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Membership (are these elements in the list?)</span>
 <span class="nb">print</span><span class="p">(</span><span class="mi">3</span> <span class="ow">in</span> <span class="n">L</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bob&quot;</span> <span class="ow">in</span> <span class="n">L</span><span class="p">)</span>
 </pre></div>
@@ -14923,7 +14970,7 @@ True
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method grow</span>
-<span class="c1"># A list is mutable and modifies in place and so growing in will not be memory inefficient like R</span>
+<span class="c1"># A list is mutable, modifies in place, and so growing in Python will not be memory inefficient like R</span>
 <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
@@ -15077,8 +15124,8 @@ True
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method Count returns the number of elements with the specified value</span>
-<span class="n">L</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method count returns the number of elements with the specified value</span>
+<span class="n">L</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15115,7 +15162,8 @@ True
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Sort by ascending order by default, i.e., reverse=False</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Sort by descending order</span>
+<span class="c1"># The default for sort is ascending, i.e., reverse=False</span>
 <span class="n">L_1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
 <span class="n">L_1</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L_1</span><span class="p">)</span>
@@ -15138,7 +15186,7 @@ True
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[2, 3, 3, 4, 9, 9, 13, 24, 45]
+<pre>[45, 24, 13, 9, 9, 4, 3, 3, 2]
 </pre>
 </div>
 </div>
@@ -15153,7 +15201,7 @@ True
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Reverses the list</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Reverse the list</span>
 <span class="n">L_2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
 <span class="n">L_2</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L_2</span><span class="p">)</span>
@@ -15218,8 +15266,8 @@ True
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[7, 6, 9, False, [&#39;dev&#39;, &#39;mgr&#39;], 40.0, &#39;Bob&#39;]
-[7, 6, 4, False, [&#39;dev&#39;, &#39;mgr&#39;], 40.0, &#39;Bob&#39;]
+<pre>[&#39;Bob&#39;, 40.0, 9, False, &#39;Ken&#39;, 5, 6, 7]
+[&#39;Bob&#39;, 40.0, [&#39;dev&#39;, &#39;mgr&#39;], False, &#39;Ken&#39;, 5, 6, 7]
 </pre>
 </div>
 </div>
@@ -15237,9 +15285,10 @@ True
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Before clear</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L_1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L_2</span><span class="p">)</span>
+<span class="c1"># Clear all elements</span>
 <span class="n">L_1</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 <span class="n">L_2</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="c1"># Clear all elements</span>
+<span class="c1"># Now L_1 and L_2 should be empty lists</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L_1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L_2</span><span class="p">)</span>
 </pre></div>
@@ -15261,8 +15310,8 @@ True
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[]
-[]
+<pre>[45, 24, 13, 9, 9, 4, 3, 3, 2]
+[7, 5, 4, 3]
 []
 []
 </pre>
@@ -15281,7 +15330,9 @@ True
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Pop removes element at the specified position</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="c1"># Remove the third element with index 2</span>
 <span class="n">L</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># Examine the list after the removal</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
 
@@ -15302,8 +15353,8 @@ True
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[7, 6, 4, False, [&#39;dev&#39;, &#39;mgr&#39;], 40.0, &#39;Bob&#39;]
-[7, 6, False, [&#39;dev&#39;, &#39;mgr&#39;], 40.0, &#39;Bob&#39;]
+<pre>[&#39;Bob&#39;, 40.0, [&#39;dev&#39;, &#39;mgr&#39;], False, &#39;Ken&#39;, 5, 6, 7]
+[&#39;Bob&#39;, 40.0, False, &#39;Ken&#39;, 5, 6, 7]
 </pre>
 </div>
 </div>
@@ -15320,6 +15371,7 @@ True
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Another way to remove by position</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="c1"># Remove the first element using del</span>
 <span class="k">del</span> <span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
@@ -15341,8 +15393,8 @@ True
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[7, 6, False, [&#39;dev&#39;, &#39;mgr&#39;], 40.0, &#39;Bob&#39;]
-[6, False, [&#39;dev&#39;, &#39;mgr&#39;], 40.0, &#39;Bob&#39;]
+<pre>[&#39;Bob&#39;, 40.0, False, &#39;Ken&#39;, 5, 6, 7]
+[40.0, False, &#39;Ken&#39;, 5, 6, 7]
 </pre>
 </div>
 </div>
@@ -15359,6 +15411,7 @@ True
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Remove by name</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="c1"># Remove by value name</span>
 <span class="n">L</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
@@ -15380,8 +15433,8 @@ True
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[6, False, [&#39;dev&#39;, &#39;mgr&#39;], 40.0, &#39;Bob&#39;]
-[6, [&#39;dev&#39;, &#39;mgr&#39;], 40.0, &#39;Bob&#39;]
+<pre>[40.0, False, &#39;Ken&#39;, 5, 6, 7]
+[40.0, &#39;Ken&#39;, 5, 6, 7]
 </pre>
 </div>
 </div>
@@ -15398,6 +15451,7 @@ True
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Remove slices</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L_new</span><span class="p">)</span>
+<span class="c1"># Remove the first three elements of the list, 0, 1, 2 not including 3</span>
 <span class="k">del</span> <span class="n">L_new</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L_new</span><span class="p">)</span>
 </pre></div>
@@ -15419,8 +15473,8 @@ True
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[7, [&#39;dev&#39;, &#39;mgr&#39;], 40.0, &#39;Bob&#39;]
-[&#39;Bob&#39;]
+<pre>[&#39;Bob&#39;, 40.0, 9, False, &#39;Ken&#39;, 5, 6, 7]
+[False, &#39;Ken&#39;, 5, 6, 7]
 </pre>
 </div>
 </div>
@@ -15439,6 +15493,8 @@ True
 <span class="c1"># This is similar to list[1:3] &lt;- NULL in R</span>
 <span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;ken&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">],</span> <span class="kc">True</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="c1"># Remove the first two elements 0 and 1</span>
+<span class="c1"># The element indexed by 2 is not included</span>
 <span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
@@ -15518,7 +15574,8 @@ True
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Subset a slice and assign</span>
 <span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
-<span class="n">L</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ken&quot;</span><span class="p">,</span> <span class="s2">&quot;needs&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;job&quot;</span><span class="p">,</span> <span class="s2">&quot;now&quot;</span><span class="p">]</span>
+<span class="c1"># Recall that the last indexed element is not included and the length of the slice L[3:7] is 4</span>
+<span class="n">L</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Ken&quot;</span><span class="p">,</span> <span class="s2">&quot;needs&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;job&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
 </pre></div>
 
@@ -15552,7 +15609,1322 @@ True
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Dictionary-">Dictionary <a class="anchor" id="dictionary" /><a class="anchor-link" href="#Dictionary-">&#182;</a></h3>
+<h3 id="Why-Slices-and-Range-Exclude-the-Last-Item?">Why Slices and Range Exclude the Last Item?<a class="anchor-link" href="#Why-Slices-and-Range-Exclude-the-Last-Item?">&#182;</a></h3><p>The Pythonic convention of excluding the last item in slices and ranges works well with the zero-based indexing. Some convenient features are as follows:</p>
+<ul>
+<li><p>It’s easy to see the length of a slice or range when only the stop position is given: <code>range(3)</code> and <code>my_list[:3]</code> both produce three items. This is not possible in R.</p>
+</li>
+<li><p>It’s easy to compute the length of a slice or range when start and stop are given: just subtract stop - start. For instance, <code>my_list[4:15]</code> would returns a slice with <code>15 - 4 = 11</code> elements. Whereas in R, we need to think a bit about it and <code>my_list[4:15]</code> would return a list with <code>15 - 4 + 1 = 12</code> since the last item is included.</p>
+</li>
+<li><p>It’s easy to split a sequence in two parts at any index x, without overlapping: simply get <code>my_list[:x]</code> and <code>my_list[x:]</code></p>
+</li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a list</span>
+<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="c1"># Split at 2</span>
+<span class="c1"># Or end at 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+<span class="c1"># Split at 2</span>
+<span class="c1"># Or start at 2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[10, 20, 30, 40, 50, 60]
+[10, 20]
+[30, 40, 50, 60]
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Dictionary-">Dictionary <a class="anchor" id="dictionary" /><a class="anchor-link" href="#Dictionary-">&#182;</a></h3><p>If we think of lists as ordered collections of objects, we can think of dictionaries as unordered collections; the chief distinction is that in dictionaries, items are <em>stored and fetched by key, instead of by positional offset</em>. The properties of dictionaries are as follows:</p>
+<p><strong>Accessed by key, not offset position</strong></p>
+<ul>
+<li>Dictionaries are sometimes called associative arrays or hashes. They associate a set of values with keys, so you can fetch an item out of a dictionary using the key under which you originally stored it. You use the same indexing operation to get components in a dictionary as you do in a list, but the index takes the form of a key, not a relative offset.</li>
+</ul>
+<p><strong>Unordered collections of arbitrary objects</strong></p>
+<ul>
+<li>Unlike in a list, items stored in a dictionary aren’t kept in any particular order; in fact, Python pseudo-randomizes their left-to-right order to provide quick lookup. Keys provide the symbolic (not physical) locations of items in a dictionary. CPython 3.6 started preserving the insertion order of the keys as an implementation detail, and Guido van Rossum declared it an offical language feature in Python 3.7, so we can depend on the insertion order of a dictionary now.</li>
+</ul>
+<p><strong>Variable-length, heterogeneous, and arbitrarily nestable</strong></p>
+<ul>
+<li>Like lists, dictionaries can grow and shrink in place (without new copies being made), they can contain objects of any type, and they support nesting to any depth (they can contain lists, other dictionaries, and so on). Each key can have just one associated value, but that value can be a collection of multiple objects if needed, and a given value can be stored under any number of keys.</li>
+</ul>
+<p><strong>Of the category “mutable mapping”</strong></p>
+<ul>
+<li>You can change dictionaries in place by assigning to indexes (they are mutable), but they don’t support the sequence operations that work on strings and lists. Because dictionaries are unordered collections, operations that depend on a fixed positional order (e.g., concatenation, slicing) don’t make sense. Instead, diction- aries are the only built-in, core type representatives of the mapping category— objects that map keys to values.</li>
+</ul>
+<p><strong>Tables of object references (hash tables)</strong></p>
+<ul>
+<li>If lists are arrays of object references that support access by position, <em>dictionaries are unordered tables of object references that support access by key</em>. Internally, dictionaries are implemented as hash tables (data structures that support very fast retrieval), which start small and grow on demand. Moreover, Python employs optimized hashing algorithms to find keys, so retrieval is quick. Like lists, dictionaries store object references (not copies, unless you ask for them explicitly).</li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Empty dictionary</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Two item (key-value pairs) dictionary</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;name&#39;: &#39;Bob&#39;, &#39;age&#39;: 40}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Nesting where a key is associated with a value that is another dictionary</span>
+<span class="n">E</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;cto&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">}}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;cto&#39;: {&#39;name&#39;: &#39;Bob&#39;, &#39;age&#39;: 40}}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Alternative ways to create dictionary</span>
+<span class="n">D</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Using tuples</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">((</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">)))</span>
+<span class="c1"># Create dictionary</span>
+<span class="n">D</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Bob&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>&lt;class &#39;tuple&#39;&gt;
+{&#39;name&#39;: &#39;Bob&#39;, &#39;age&#39;: 40}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Using lists</span>
+<span class="n">D</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;Ken&quot;</span><span class="p">,</span> <span class="s2">&quot;Wu&quot;</span><span class="p">],</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Ken&#39;: True, &#39;Wu&#39;: 3}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Keys and Values</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span> <span class="p">}</span>
+<span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># Using dictionary method</span>
+<span class="n">D</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="c1"># Updating the value</span>
+<span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;o&#39;: [1], &#39;i&#39;: [1], &#39;e&#39;: [1], &#39;u&#39;: [1], &#39;a&#39;: [1]}
+{&#39;o&#39;: [1, 7], &#39;i&#39;: [1, 7], &#39;e&#39;: [1, 7], &#39;u&#39;: [1, 7], &#39;a&#39;: [1, 7]}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a dictionary</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Bob&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">}</span>
+<span class="c1"># Index by key</span>
+<span class="n">D</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>&#39;Bob&#39;</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+<span class="c1"># Index of index</span>
+<span class="c1"># The value associated with &quot;cto&quot; is another dictionary, and we want to select the value with the key &quot;age&quot;</span>
+<span class="n">E</span><span class="p">[</span><span class="s1">&#39;cto&#39;</span><span class="p">][</span><span class="s1">&#39;age&#39;</span><span class="p">]</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;cto&#39;: {&#39;name&#39;: &#39;Bob&#39;, &#39;age&#39;: 40}}
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>40</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Create a dictionary</span>
+<span class="n">temp_D</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s1">&#39;firstKey&#39;</span><span class="p">,</span> <span class="s1">&#39;secondKey&#39;</span><span class="p">,</span> <span class="s1">&#39;thirdKey&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">False</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp_D</span><span class="p">)</span>
+<span class="c1"># Index multiple key-value pairs</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;firstKey&#39;</span><span class="p">,</span> <span class="s1">&#39;secondKey&#39;</span><span class="p">,</span> <span class="s1">&#39;thirdKey&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">temp_D</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;firstKey&#39;: 3, &#39;secondKey&#39;: 5, &#39;thirdKey&#39;: False}
+3
+5
+False
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="c1"># Membership (Is the key present in the dictionary?)</span>
+<span class="s1">&#39;age&#39;</span> <span class="ow">in</span> <span class="n">D</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Physics&#39;: 67, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48}
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>False</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method show all keys</span>
+<span class="n">D</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>dict_keys([&#39;Physics&#39;, &#39;Maths&#39;, &#39;Practical&#39;])</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method show all values</span>
+<span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>dict_values([67, 87, 48])</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method show all key-value tuples</span>
+<span class="c1"># This is a dictionary item object</span>
+<span class="n">D</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>dict_items([(&#39;Physics&#39;, 67), (&#39;Maths&#39;, 87), (&#39;Practical&#39;, 48)])</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method create a copy</span>
+<span class="n">New_D</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1"># Copy on modify</span>
+<span class="n">New_D</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">43</span>
+<span class="c1"># New dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">New_D</span><span class="p">)</span>
+<span class="c1"># The original object should remain unchanged</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Physics&#39;: 67, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48, &#39;name&#39;: 43}
+{&#39;Physics&#39;: 67, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method remove all items</span>
+<span class="n">New_D</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">New_D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method merge by key</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Physics&#39;</span><span class="p">:</span> <span class="mi">67</span><span class="p">,</span> <span class="s1">&#39;Maths&#39;</span><span class="p">:</span> <span class="mi">87</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="n">D2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Practical&#39;</span><span class="p">:</span> <span class="mi">48</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D2</span><span class="p">)</span>
+<span class="c1"># Update</span>
+<span class="n">D</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">D2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Physics&#39;: 67, &#39;Maths&#39;: 87}
+{&#39;Practical&#39;: 48}
+{&#39;Physics&#39;: 67, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># The get() method returns the value for the specified key if the key is in the dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Practical&#39;</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Physics&#39;: 67, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48}
+48
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># The get() method returns a default value if the key is missing</span>
+<span class="c1"># Unlike dict[key], a KeyError is raised when trying to get a missing key</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">,</span> <span class="s2">&quot;Key does not exist&quot;</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>Key does not exist
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Method remove by key, if absent the the default value is returned (or error if no default is specified)</span>
+<span class="n">D</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">,</span> <span class="s2">&quot;No key to delete&quot;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>&#39;No key to delete&#39;</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="c1"># The setdefault() method returns the value of a key (if the key is in dictionary)</span>
+<span class="c1"># If not, it inserts key with a value to the dictionary</span>
+<span class="n">D</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;Yo&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Physics&#39;: 67, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48}
+{&#39;Physics&#39;: 67, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48, &#39;Yo&#39;: True}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># The Python popitem() method removes and returns the last element (key, value) pair inserted into the dictionary</span>
+<span class="c1"># Before Python 3.7, the popitem() method returned and removed an arbitrary element (key, value) pair from the dictionary</span>
+<span class="c1"># This should remove the &quot;Yo&quot;:True pair</span>
+<span class="n">D</span><span class="o">.</span><span class="n">popitem</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Physics&#39;: 67, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Length, which is the number of stroed entries</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>3</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="c1"># Adding changing keys</span>
+<span class="n">D</span><span class="p">[</span><span class="s1">&#39;Physics&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">D</span><span class="p">[</span><span class="s1">&#39;New&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Ken&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Physics&#39;: 42, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48}
+{&#39;Physics&#39;: 42, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48, &#39;New&#39;: &#39;Ken&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="c1"># Changing multiple keys</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Physics&#39;</span><span class="p">,</span> <span class="s1">&#39;YOLO&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">]</span>
+<span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;studio&quot;</span><span class="p">]</span>
+<span class="c1"># Adding and changing multiple keys</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="n">D</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="c1"># Check new dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Physics&#39;: 42, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48, &#39;New&#39;: &#39;Ken&#39;}
+{&#39;Physics&#39;: 100, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48, &#39;New&#39;: &#39;Ken&#39;, &#39;YOLO&#39;: False, &#39;R&#39;: &#39;studio&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionary</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+<span class="c1"># Deleting entries by key</span>
+<span class="k">del</span> <span class="n">D</span><span class="p">[</span><span class="s1">&#39;Maths&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;Physics&#39;: 100, &#39;Maths&#39;: 87, &#39;Practical&#39;: 48, &#39;New&#39;: &#39;Ken&#39;, &#39;YOLO&#39;: False, &#39;R&#39;: &#39;studio&#39;}
+{&#39;Physics&#39;: 100, &#39;Practical&#39;: 48, &#39;New&#39;: &#39;Ken&#39;, &#39;YOLO&#39;: False, &#39;R&#39;: &#39;studio&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionary views</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[&#39;Physics&#39;, &#39;Practical&#39;, &#39;New&#39;, &#39;YOLO&#39;, &#39;R&#39;]
+[100, 48, &#39;Ken&#39;, False, &#39;studio&#39;]
+[(&#39;Physics&#39;, 100), (&#39;Practical&#39;, 48), (&#39;New&#39;, &#39;Ken&#39;), (&#39;YOLO&#39;, False), (&#39;R&#39;, &#39;studio&#39;)]
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Comprehensions</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)}</span> 
+<span class="c1"># Take 1 and pair it with the value 1 raised to the power 4</span>
+<span class="c1"># Take 2 and pair it with the value 2 raised to the power 4</span>
+<span class="c1"># Take 3 and pair it with the value 3 raised to the power 4</span>
+<span class="c1"># Take 4 and pair it with the value 4 raised to the power 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{1: 1, 2: 16, 3: 81, 4: 256}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Loop over any iterable</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="n">c</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="s1">&#39;SPAM&#39;</span><span class="p">}</span> 
+<span class="c1"># Take c in &#39;SPAM&#39;, which is the letter S, and pair it with the value S concatenated 4times</span>
+<span class="c1"># Take c in &#39;SPAM&#39;, which is the letter P, and pair it with the value P concatenated 4 times</span>
+<span class="c1"># Take c in &#39;SPAM&#39;, which is the letter A, and pair it with the value A concatenated 4 times</span>
+<span class="c1"># Take c in &#39;SPAM&#39;, which is the letter M, and pair it with the value M concatenated 4 times</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;S&#39;: &#39;SSSS&#39;, &#39;P&#39;: &#39;PPPP&#39;, &#39;A&#39;: &#39;AAAA&#39;, &#39;M&#39;: &#39;MMMM&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionary comprehensions can be useful when initializing a dictionary</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]}</span> 
+<span class="c1"># Each key in [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;] is initialized with the value 0</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;a&#39;: 0, &#39;b&#39;: 0, &#39;c&#39;: 0}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Initialize with None</span>
+<span class="n">D</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="s1">&#39;spam&#39;</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>{&#39;s&#39;: None, &#39;p&#39;: None, &#39;a&#39;: None, &#39;m&#39;: None}
+</pre>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Tuples-">Tuples <a class="anchor" id="tuples" /><a class="anchor-link" href="#Tuples-">&#182;</a></h3>
 </div>
 </div>
 </body>
