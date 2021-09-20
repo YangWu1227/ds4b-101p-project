@@ -6,7 +6,17 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from pandas.core.series import Series
+from plotnine.themes.elements import element_blank
 from pandas_extensions.database import collect_data
+from mizani.formatters import dollar_format
+from plotnine import (
+    ggplot, geom_col,
+    aes, facet_wrap, labels,
+    theme, labs,
+    element_blank, element_rect,
+    coord_flip, guide_legend
+)
 
 # DATA -------------------------------------------
 
@@ -532,7 +542,7 @@ df.shape
 )
 
 # Get the sum and median by groups -------------------------------------------
-summary_df_1 = (
+summary_df_1 = pd.DataFrame(
     df[[
         "category_1", "category_2", "total_revenue"
     ]].groupby(
@@ -684,65 +694,639 @@ summary_df_3 = pd.DataFrame(summary_df_3)
 )
 
 
-# 6.0 RENAMING ----
+# 6.0 RENAMING -------------------------------------------
 
-# Single Index
+summary_df_2
+
+# Using anonymous function -------------------------------------------
+(
+    summary_df_2.rename(
+        # Each x will be a column name
+        columns=lambda x: x.replace(
+            "_",
+            " "
+        )
+        # Convert strings in series/index to titlecase
+        .title(),
+        inplace=False
+    )
+)
+# The lambda function utilizes string methods
+"string_2".replace("_", " ").title()
+
+# Targeting specific columns -------------------------------------------
+(
+    summary_df_2.rename(
+        columns={
+            "total_revenue": "Total Revenue",
+            "quantity": "Total Quantity",
+            "category_1": "Cat 1",
+            "category_2": "Cat 2"
+        },
+        inplace=False
+    )
+)
+
+# - Mult-Index -------------------------------------------
+
+# This data frame has multi-index
+# Stacked with levels
+summary_df_1
+
+# The index object is a list container referencing tuples which reference other objects
+summary_df_1.columns
+# Each tuple in this MultiIndex object has two elements
+for tup in summary_df_1.columns:
+    print(len(tup))
+# One element is level 1 index and the other is level 2 (e.g. mean and std)
+# We use list comprehension to create a list to replace the multi-level index
+# The method join() is a str method that can join strings (the two elements in each tuple)
+# The rstrip() method removes any trailing characters (characters at the end of a string)
+# The opposite is lstrip() which removes leading characters
+# For both, space is the default trailing character to remove
+[
+    "_".join(col).rstrip("_") for col in summary_df_1.columns.tolist()
+]
+# Suppose we wish to flatten the stacked multi-level index
+# The multi-level index should now be flattened
+(
+    summary_df_1.set_axis(
+        # The labels takes list-like inputs
+        # We use a list comprehension to create a list to supply here
+        labels=[
+            "_".join(col).rstrip("_") for col in summary_df_1.columns.tolist()
+        ],
+        axis=1,
+        inplace=False
+    )
+)
 
 
-# Targeting specific columns
-
-
-# - Mult-Index
-
-
-# 7.0 RESHAPING (MELT & PIVOT_TABLE) ----
+# 7.0 RESHAPING (MELT & PIVOT_TABLE) -------------------------------------------
 
 # Aggregate Revenue by Bikeshop by Category 1
+bikeshop_revenue_df = pd.DataFrame(
+    df[["bikeshop_name", "total_revenue", "category_1"]]
+    .groupby(
+        by=["bikeshop_name", "category_1"]
+    )
+    .aggregate(
+        {"total_revenue": np.sum}
+    )
+    .reset_index()
+    .sort_values(
+        by="total_revenue",
+        ascending=False
+    )
+    .rename(
+        columns=lambda x: x.replace(
+            "_",
+            " "
+        )
+        .title()
+    )
+)
+# Examine shape
+bikeshop_revenue_df.shape
+# Descriptive stats
+bikeshop_revenue_df.describe()
+
+# 7.1 Pivot & Melt -------------------------------------------
+
+# Pivot (Pivot Wider) -------------------------------------------
+bikeshop_revenue_wide_df = pd.DataFrame(
+    bikeshop_revenue_df
+    .pivot(
+        index=["Bikeshop Name"],
+        columns=["Category 1"],
+        values=["Total Revenue"]
+    )
+    .reset_index()
+    .set_axis(
+        labels=["Bikeshop Name", "Mountain", "Road"],
+        axis=1,
+        inplace=False
+    )
+)
+# Examine shape
+bikeshop_revenue_wide_df.shape
+
+# Create stylized pandas table using styler and format methods -------------------------------------------
+(
+    bikeshop_revenue_wide_df.sort_values(
+        by=["Mountain"],
+        ascending=False
+    )
+    .style.highlight_max()
+    .format(
+        {
+            # Each x is a column (Series) specified by "variable"
+            "Mountain": lambda x: f'${x}',
+            "Road": lambda x: f'${x}'
+        }
+    )
+)
+# Another option
+(
+    bikeshop_revenue_wide_df.sort_values(
+        by=["Mountain"],
+        ascending=False
+    )
+    .style.highlight_max()
+    .format(
+        {
+            # Add dollar sign up front and comma separators
+            "Mountain": "${:,}",
+            "Road": "${:,}"
+        }
+    )
+)
+# Another option
+(
+    bikeshop_revenue_wide_df.sort_values(
+        by=["Mountain"],
+        ascending=False
+    )
+    .style.highlight_max()
+    .format(
+        {
+            # Use anonymous function and formating
+            "Mountain": lambda x: "$" + "{:,}".format(x),
+            "Road": lambda x: "$" + "{:,}".format(x)
+        }
+    )
+)
+# Yet, another possibility using the mizani package
+# Create a dollar formatter
+usd = dollar_format(
+    prefix="$",
+    big_mark=","
+)
+# Test this formatter
+# This formatter returns a list object so we would need to extract the formatted str elements
+for num in usd(pd.Series([23232, 2322365323, 232323])):
+    print(num)
+# Format using this formatter
+(
+    bikeshop_revenue_wide_df.sort_values(
+        by=["Mountain"],
+        ascending=False
+    )
+    .style.highlight_max()
+    .format(
+        {
+            # Use anonymous function and formating
+            "Mountain": lambda x: usd([x])[0],
+            "Road": lambda x: usd([x])[0]
+        }
+    )
+    #    .to_excel(
+    # "./03_pandas_core/bikeshop_revenue_wide.xlsx"
+    #    )
+)
 
 
-# 7.1 Pivot & Melt
+# Melt (Pivoting Longer) -------------------------------------------
 
-# Pivot (Pivot Wider)
+# Suppose we read in data that is wide
+# Convert from wide to long
+bikeshop_revenue_long_df = pd.DataFrame(
+    pd.read_excel(
+        "./03_pandas_core/bikeshop_revenue_wide.xlsx"
+    )
+    # Select all rows but start from column 2 and not the first 0 indexed "unnamed" column
+    .iloc[:, 1:]
+    # Pivot longer
+    .melt(
+        id_vars="Bikeshop Name",
+        value_vars=["Mountain", "Road"],
+        var_name="Category 1",
+        value_name="Total Revenue"
+    )
+    .sort_values(
+        by="Total Revenue",
+        ascending=False
+    )
+)
+# Examine shape
+# This should match what it was before we reshaped by pivoting wider
+bikeshop_revenue_df.shape
+# Descriptive stats
+bikeshop_revenue_df.describe()
 
+# Bikeshop name in terms of total revenue in descending order
+# This is a List object
+bikeshop_order = (
+    bikeshop_revenue_long_df.groupby(
+        by=["Bikeshop Name"]
+    )
+    .aggregate(
+        {
+            "Total Revenue": np.sum
+        }
+    )
+    .sort_values(
+        by=["Total Revenue"],
+        ascending=False
+    )
+    # Get the attribute--- the index object
+    .index
+    # Convert index object to list
+    # This is the order of the bikeshop name sorted in terms of revenue
+    .tolist()
+)
+# Create category in the same order as the list object above
+bikeshop_revenue_long_df["Bikeshop Name"] = pd.Categorical(
+    bikeshop_revenue_long_df["Bikeshop Name"],
+    # Specify the unique categories for this categorical variable
+    categories=bikeshop_order
+)
+bikeshop_revenue_long_df.info()
 
-# Melt (Pivoting Longer)
+# Create a plot
+(
+    ggplot(
+        data=bikeshop_revenue_long_df,
+        mapping=aes(
+            x="Bikeshop Name",
+            y="Total Revenue",
+            fill='Category 1'
+        )
+    ) +
+    geom_col() +
+    coord_flip() +
+    facet_wrap("Category 1") +
+    labs(
+        x="Bikeshop Name",
+        y="Total Revenue (USD)",
+        title="Total Revenue by Bike Type"
+    ) +
+    theme(
+        panel_grid=element_blank(),
+        panel_background=element_rect(fill="white"),
+        legend_position="none"
+    )
+)
 
+# 7.2 Pivot Table (Pivot + Summarization, Excel Pivot Table) -------------------------------------------
+(
+    df.pivot_table(
+        values=["total_revenue"],
+        index=["category_1"],
+        columns=["frame_material"],
+        aggfunc=np.sum
+    )
+)
+# Two indices similar to Tableau when you add granularity
+(
+    df.pivot_table(
+        values=["total_revenue"],
+        index=["category_1", "frame_material"],
+        columns=None,
+        aggfunc=np.sum
+    )
+)
 
-# 7.2 Pivot Table (Pivot + Summarization, Excel Pivot Table)
+# Create a year variable
+# Sales by categories
 
+# Two indices similar to Tableau when you add granularity
+# The two categories are dimensions and revenue is the numerical data
+# The sum function is used to aggregate
+sales_by_categories_and_year = pd.DataFrame(
+    df.assign(
+        # Use the dt accessor to extrat the year from the data variable
+        year=lambda x: x.order_date.dt.year
+    )
+    .pivot_table(
+        values=["total_revenue"],
+        index=["category_1", "category_2"],
+        columns="year",
+        aggfunc=np.sum
+    )
+)
 
-# 7.3 Stack & Unstack ----
+# 7.3 Stack & Unstack -------------------------------------------
 
 # Unstack - Pivots Wider 1 Level (Pivot)
+(
+    sales_by_categories_and_year.unstack(
+        # Specify the column to pivot wider
+        # This can also be 0, 1, ....
+        # Where 0 is the outermost column and so on so forth
+        level="category_1",
+        # If there are NaN's, replace those with 0
+        fill_value=0
+    )
+)
 
 # Stack - Pivots Longer 1 Level (Melt)
+(
+    sales_by_categories_and_year.stack(
+        level="year",
+        dropna=False
+    )
+)
+# We can combine stack and unstack to transpose a data frame
+(
+    sales_by_categories_and_year.stack(
+        level="year",
+        dropna=False
+    )
+    .unstack(
+        level=["category_1", "category_2"],
+        fill_value=0
+    )
+)
+# Compare the above pivot tables to the original
+# Year was wide but is now long
+# The categories were indices but are now wide
+sales_by_categories_and_year
+
+# 8.0 JOINING DATA -------------------------------------------
+
+# Read in raw data
+orderline_df = (
+    pd.read_excel(
+        "./00_data_raw/orderlines.xlsx"
+    )
+    # Start indexing from second column
+    # We drop the first "unnamed" column
+    # Keep all rows
+    .iloc[:, 1:]
+)
+bikes_df = (
+    pd.read_excel(
+        "./00_data_raw/bikes.xlsx"
+    )
+)
 
 
-# 8.0 JOINING DATA ----
+# Merge (Joining) -------------------------------------------
+# Left join bikes_df onto order_line_df
+left_joined = (
+    orderline_df.merge(
+        right=bikes_df,
+        how="left",
+        left_on="product.id",
+        right_on="bike.id"
+    )
+)
+# Right join but same results
+right_joined = (
+    bikes_df.merge(
+        right=orderline_df,
+        how="right",
+        left_on="bike.id",
+        right_on="product.id"
+    )
+)
+# Reorder the left joined data frame to match the right joined data frame
+right_joined.columns.tolist()
+# Select from the left joined data frame in the order above
+left_joined = left_joined[right_joined.columns.tolist()]
+# Now compare the left-and-right joined data frames
+# All True's and so the two data frame are the same
+(right_joined == left_joined).sum()
+# Another to check for equality is using the method
+right_joined.equals(left_joined)
 
 
-# Merge (Joining)
+# Concatenate (Binding) -------------------------------------------
+
+# Columns -------------------------------------------
+# Middle column is ?
+middle = int(left_joined.shape[1] / 2)
+# Split the data frame in half column-wise
+left_half = left_joined.iloc[:, :middle]
+right_half = left_joined.iloc[:, middle:]
+# Now column bind the two halves to get the original data frame back
+# Ensure the two df's have the same row index or there would be NaN's
+col_bind = pd.concat(
+    [left_half, right_half],
+    axis=1
+)
+# This new data frame should be the same as the original
+col_bind.equals(left_joined)
+
+# Rows -------------------------------------------
+# Middle row is
+middle = int(left_joined.shape[0] / 2)
+# Split data frame in half row-wise
+top_half = left_joined.iloc[:middle, :]
+bottom_half = left_joined.iloc[middle:, :]
+# Now row bind the two halves
+row_bind = pd.concat(
+    [top_half, bottom_half]
+)
+# Check for equality
+row_bind.equals(left_joined)
+
+# 9.0 SPLITTING (SEPARATING) COLUMNS AND COMBINING (UNITING) COLUMNS -------------------------------------------
+
+# Separate -------------------------------------------
+(
+    df.order_date.astype(
+        "str"
+    )
+    .str.split(
+        pat="-",
+        # Expand the split strings into separate columns
+        expand=True,
+    )
+    .rename(
+        columns={
+            0: "year",
+            1: "month",
+            2: "day"
+        }
+    )
+)
+# Another way to rename the columns is to use set_axis()
+date_data = pd.DataFrame(
+    df.order_date.astype(
+        "str"
+    )
+    .str.split(
+        pat="-",
+        # Expand the split strings into separate columns
+        expand=True,
+    )
+    .set_axis(
+        labels=[
+            "year",
+            "month",
+            "day"
+        ],
+        axis=1,
+        inplace=False
+    )
+)
+date_data
+
+# Combine -------------------------------------------
+# Initialize a data frame
+date_date2 = pd.DataFrame()
+# Combine columns into one
+date_date2["order_date"] = (
+    date_data[[
+        "year",
+        "month",
+        "day"
+    ]].aggregate(
+        "-".join,
+        axis=1
+    )
+)
+# Now this date column is a string
+date_date2.info()
+# Convert string to datetime object
+date_date2.order_date = pd.to_datetime(
+    date_date2.order_date,
+)
+# Now the date column should be a datetime object
+date_date2.info()
+
+# 10.0 APPLY -------------------------------------------
+# Create a data frame to practice
+sales_by_category2_daily = pd.DataFrame(
+    df[["category_2", "order_date", "total_revenue"]]
+    .set_index(
+        ["order_date"]
+    )
+    .groupby(
+        by=["category_2"]
+    )
+    # Sample up to daily frequency
+    .resample(
+        rule="D"
+    )
+    .aggregate(
+        {
+            "total_revenue": np.sum
+        }
+    )
+)
+sales_by_category2_daily
+
+# Aggregation takes a series and returns a single value
+sales_by_category2_daily.apply(
+    func=np.mean
+)
+# Transformation takes a series and returns a series of the same length
+sales_by_category2_daily.apply(
+    # Each x is column
+    # Since category_2 and order_date are not numeric, it is just total revenue
+    func=lambda x: x ** 2
+)
+
+# Broadcasting is the methodology adopted in NumPy used to
+# perform arithmetic operations on arrays with differing dimensions.
+# General arithmetic operations such as addition,
+# multiplication, subtraction, etc. tend to broadcast arrays
+# before performing the operations on arrays with variations in size.
+sales_by_category2_daily.apply(
+    func=np.mean,
+    result_type="broadcast"
+)
+# This is equivalent to
+sales_by_category2_daily.apply(
+    # Each x is a series
+    func=lambda x: np.repeat(
+        # The aggregation function takes the revenue series
+        # It returns a single value
+        a=np.mean(x),
+        # Repeat the single mean value this many times
+        # Then fill the places instead of using 0
+        repeats=len(x)
+    )
+)
+
+# Apply function by group
+# Compute mean revenue by group
+(
+    sales_by_category2_daily.groupby(
+        by=["category_2"]
+    )
+    .apply(
+        func=np.mean
+    )
+)
+# Broadcasting by group
+(
+    sales_by_category2_daily.groupby(
+        by=["category_2"]
+    )
+    .apply(
+        # Each x is a data frame belonging to one group
+        # In the above example we had one single "ungrouped" data frame
+        func=lambda x: np.repeat(
+            a=np.mean(x),
+            repeats=len(x)
+        )
+    )
+)
+# Another solution that does not involve losing the order date column
+(
+    sales_by_category2_daily.groupby(
+        by=["category_2"]
+    )
+    .transform(
+        # This passes each grouped column to the function np.mean
+        # That is, the revenue series column rather than the data frame
+        # So transform() returns the other columns not passed to the aggregation function
+        func=np.mean
+    )
+)
 
 
-# Concatenate (Binding)
-
-# Columns
-
-
-# Rows
-
-
-# 9.0 SPLITTING (SEPARATING) COLUMNS AND COMBINING (UNITING) COLUMNS
-
-# Separate
-
-
-# Combine
-
-
-# 10.0 APPLY
-# - Apply functions across rows
-
-
-# 11.0 PIPE
+# 11.0 PIPE -------------------------------------------
 # - Functional programming helper for "data" functions
+
+# Create a function that adds a column
+def add_col(data, **kwargs):
+    # Make a copy
+    data_copy = data.copy()
+    # Create new column
+    # The kwargs are key-value pairs, which are stored as dictionaries
+    # The user supply the expressions {new_var = ...} as kwargs
+    # Then, this kwargs expression is stored as a dictionary
+    # Finally, the dictionary is supplied to pd.DataFrame
+    data_copy[list(kwargs.keys())] = pd.DataFrame(
+        kwargs
+    )
+    # Output
+    return data_copy
+
+
+# See it in action
+add_col(
+    data=df,
+    rescaled_revenue=df.total_revenue / 100
+)
+
+# The pipe method allows for using custom "data function" in method chain
+# A "data function" takes a data frame as its first argument and returns a data frame
+(
+    df.pipe(
+        func=add_col,
+        # This is the argument to add_col()
+        rescaled_revenue=df.total_revenue / 100
+    )
+    .sort_values(
+        by=["rescaled_revenue"],
+        ascending=False
+    )
+)
+# Another example
+(
+    df.pipe(
+        func=add_col,
+        # This is the argument to add_col()
+        lower_case_cat=df.category_2.str.lower()
+    )
+    # Select the last column, which is our created column
+    .iloc[
+        :, -1
+    ]
+)
