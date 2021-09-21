@@ -727,7 +727,7 @@ summary_df_2
     )
 )
 
-# - Mult-Index -------------------------------------------
+# - Multi-Index -------------------------------------------
 
 # This data frame has multi-index
 # Stacked with levels
