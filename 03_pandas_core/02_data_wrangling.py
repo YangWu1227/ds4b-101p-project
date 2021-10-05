@@ -797,8 +797,11 @@ bikeshop_revenue_df.describe()
 bikeshop_revenue_wide_df = pd.DataFrame(
     bikeshop_revenue_df
     .pivot(
+        # Index column
         index=["Bikeshop Name"],
+        # Columns names from
         columns=["Category 1"],
+        # Values from
         values=["Total Revenue"]
     )
     .reset_index()
